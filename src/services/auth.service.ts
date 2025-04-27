@@ -1,3 +1,4 @@
+import type { RegisterInput } from '@/schemas/auth.schema';
 import type { User } from '../interfaces/user.interface';
 import { AuthRepository } from '../repositories/auth.repository';
 import { ApiError } from '../utils/apiError';
@@ -20,12 +21,9 @@ export class AuthService {
     this.passwordService = new PasswordService();
   }
 
-  async register(userData: Partial<User>): Promise<AuthResponse> {
-    if (!userData.email || !userData.password) {
-      throw ApiError.badRequest('Email and password are required');
-    }
-
+  async register(userData: RegisterInput): Promise<AuthResponse> {
     const existingUser = await this.authRepository.findUserByEmail(userData.email);
+
     if (existingUser) {
       throw ApiError.badRequest('Email already exists');
     }
