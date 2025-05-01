@@ -1,10 +1,10 @@
 import type { RegisterInput } from '@/schemas/auth.schema';
+import { omitAttributes } from '@/utils/common';
 import type { User } from '../interfaces/user.interface';
 import { AuthRepository } from '../repositories/auth.repository';
 import { ApiError } from '../utils/apiError';
 import { JwtService } from '../utils/services/jwt.service';
 import { PasswordService } from '../utils/services/password.service';
-import { omitAttributes } from '@/utils/common';
 
 interface AuthResponse {
   user: Omit<User, 'password'>;
@@ -55,9 +55,10 @@ export class AuthService {
       throw new ApiError(401, 'Invalid email or password');
     }
 
-    const token = this.jwtService.generateToken(omitAttributes(user, ['password']));
+    const userWithoutPassword = omitAttributes(user, ['password']);
 
-    const { password: _, ...userWithoutPassword } = user;
+    const token = this.jwtService.generateToken(userWithoutPassword);
+
     return {
       user: userWithoutPassword,
       token,
