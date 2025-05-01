@@ -1,8 +1,6 @@
-import { ERROR_MESSAGES } from '../config/constants';
 import type { BaseRepository } from '../interfaces/repository.interface';
 import type { User } from '../interfaces/user.interface';
 import { UserModel } from '../models/user.model';
-import { ApiError } from '../utils/apiError';
 
 export class UserRepository implements BaseRepository<User> {
   async create(data: Partial<User>): Promise<User> {

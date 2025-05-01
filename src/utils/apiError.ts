@@ -4,9 +4,11 @@ export class ApiError extends Error {
   constructor(
     public statusCode: number,
     public message: string,
+    public errors?: any,
     public isOperational = true,
   ) {
     super(message);
+    this.errors = errors;
     Error.captureStackTrace(this, this.constructor);
   }
 
@@ -29,7 +31,7 @@ export class ApiError extends Error {
   static internalServerError(message: string): ApiError {
     return new ApiError(HTTP_STATUS.INTERNAL_SERVER_ERROR, message);
   }
-  static validationError(message: string): ApiError {
-    return new ApiError(HTTP_STATUS.UNPROCESSABLE_ENTITY, message);
+  static validationError(message: string, errors?: any): ApiError {
+    return new ApiError(HTTP_STATUS.UNPROCESSABLE_ENTITY, message, errors);
   }
 }

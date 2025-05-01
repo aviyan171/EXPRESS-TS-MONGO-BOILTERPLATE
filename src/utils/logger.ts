@@ -1,4 +1,4 @@
-import winston, { transports } from 'winston';
+import winston from 'winston';
 
 // const levels = {
 //   error: 0,
@@ -20,24 +20,40 @@ const colors = {
 
 winston.addColors(colors);
 
-const format = winston.format.combine(
+// Console format - with colors
+const consoleFormat = winston.format.combine(
   winston.format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss:ms' }),
   winston.format.colorize({ all: true }),
   winston.format.printf((info) => `${info.timestamp} ${info.level}: ${info.message}`),
 );
 
+// File format - without colors
+const fileFormat = winston.format.combine(
+  winston.format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss:ms' }),
+  winston.format.uncolorize(),
+  winston.format.json(),
+);
+
 // Create the logger with a default level
 export const logger = winston.createLogger({
   level: process.env.LOG_LEVEL || 'info',
-  format,
   transports: [
+    // Console transport with colors
     new winston.transports.Console({
-      format: winston.format.combine(winston.format.colorize(), winston.format.colorize()),
+      format: consoleFormat,
     }),
+    // File transports without colors (only in production)
     ...(process.env.NODE_ENV === 'production'
       ? [
-          new winston.transports.File({ filename: 'logs/error.log', level: 'error' }),
-          new winston.transports.File({ filename: 'logs/combined.log' }),
+          new winston.transports.File({
+            filename: 'logs/error.log',
+            level: 'error',
+            format: fileFormat,
+          }),
+          new winston.transports.File({
+            filename: 'logs/combined.log',
+            format: fileFormat,
+          }),
         ]
       : []),
   ],

@@ -4,6 +4,7 @@ import { AuthRepository } from '../repositories/auth.repository';
 import { ApiError } from '../utils/apiError';
 import { JwtService } from '../utils/services/jwt.service';
 import { PasswordService } from '../utils/services/password.service';
+import { omitAttributes } from '@/utils/common';
 
 interface AuthResponse {
   user: Omit<User, 'password'>;
@@ -34,12 +35,9 @@ export class AuthService {
       password: hashedPassword,
     });
 
-    const token = this.jwtService.generateToken({
-      userId: user.id,
-      email: user.email,
-    });
+    const token = this.jwtService.generateToken(omitAttributes(user, ['password']));
 
-    const { password, ...userWithoutPassword } = user;
+    const { password: _, ...userWithoutPassword } = user;
     return {
       user: userWithoutPassword,
       token,
@@ -57,10 +55,7 @@ export class AuthService {
       throw new ApiError(401, 'Invalid email or password');
     }
 
-    const token = this.jwtService.generateToken({
-      userId: user.id,
-      email: user.email,
-    });
+    const token = this.jwtService.generateToken(omitAttributes(user, ['password']));
 
     const { password: _, ...userWithoutPassword } = user;
     return {

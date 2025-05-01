@@ -1,11 +1,12 @@
 import { errorHandler } from '@/middleware/errorHandler';
-import { routes } from '@/routes';
-import { logger } from '@/utils/logger';
 import compression from 'compression';
 import cors from 'cors';
 import express, { type Express } from 'express';
 import helmet from 'helmet';
 import morgan from 'morgan';
+import { routes } from '../routes';
+import { logger } from '../utils/logger';
+
 import { APP_CONSTANTS } from './constants';
 import { env } from './env';
 import { compressionOptions, corsOptions, helmetOptions, rateLimiter } from './middleware';
@@ -73,7 +74,7 @@ export const createApp = (options: AppOptions = defaultOptions): Express => {
   // API routes
   app.use(`/api/${APP_CONSTANTS.API_VERSION}`, routes);
 
-  // Error handling
+  // Error handling middleware - must be last
   app.use(errorHandler);
 
   return app;

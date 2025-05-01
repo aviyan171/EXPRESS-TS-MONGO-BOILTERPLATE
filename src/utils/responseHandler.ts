@@ -9,7 +9,7 @@ interface SuccessResponse<T> {
 
 interface ErrorResponse {
   success: false;
-  error: string;
+  message: string;
   details?: unknown;
   stack?: string;
 }
@@ -32,14 +32,14 @@ export const sendSuccess = <T>(
 
 export const sendError = (
   res: Response,
-  error: string,
+  message: string,
   details?: unknown,
   statusCode: number = HTTP_STATUS.BAD_REQUEST,
   stack?: string,
 ): void => {
   const response: ErrorResponse = {
     success: false,
-    error,
+    message,
   };
 
   if (details) response.details = details;

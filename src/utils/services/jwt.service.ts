@@ -5,6 +5,11 @@ import { jwtConfig } from '../../config/jwtConfig';
 interface TokenPayload extends JwtPayload {
   userId: string;
   email: string;
+  firstName: string;
+  lastName: string;
+  middleName?: string;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export class JwtService {

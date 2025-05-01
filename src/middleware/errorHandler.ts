@@ -10,9 +10,15 @@ import { ZodError } from 'zod';
 /**
  * Global error handler middleware
  */
-export const errorHandler = (err: Error, _req: Request, res: Response): void => {
+export const errorHandler = (
+  err: Error,
+  _req: Request,
+  res: Response,
+  _next: NextFunction,
+): void => {
   // Log error
-  logger.error(err);
+  logger.error(err.message);
+  logger.error(err.stack);
 
   // Set default values
   let statusCode = HTTP_STATUS.INTERNAL_SERVER_ERROR as number;
@@ -24,6 +30,10 @@ export const errorHandler = (err: Error, _req: Request, res: Response): void => 
   if (err instanceof ApiError) {
     statusCode = err.statusCode;
     message = err.message;
+    if (err.errors) {
+      errors = err.errors;
+      logger.error(errors);
+    }
   }
   // Mongoose validation errors
   else if (err instanceof mongoose.Error.ValidationError) {

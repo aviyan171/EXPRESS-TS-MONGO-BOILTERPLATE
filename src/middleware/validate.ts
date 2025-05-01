@@ -1,5 +1,5 @@
 import type { NextFunction, Request, Response } from 'express';
-import type { AnyZodObject } from 'zod';
+import { type AnyZodObject, ZodError } from 'zod';
 import { ApiError } from '../utils/apiError';
 
 export const validate = (schema: AnyZodObject) => {
@@ -13,8 +13,8 @@ export const validate = (schema: AnyZodObject) => {
 
       return next();
     } catch (error) {
-      if (error instanceof ApiError) {
-        return next(ApiError.validationError(error.message));
+      if (error instanceof ZodError) {
+        return next(ZodError.create(error.errors));
       }
       return next(ApiError.internalServerError('Validation failed'));
     }
