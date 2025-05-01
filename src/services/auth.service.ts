@@ -35,9 +35,10 @@ export class AuthService {
       password: hashedPassword,
     });
 
-    const token = this.jwtService.generateToken(omitAttributes(user, ['password']));
+    const userWithoutPassword = omitAttributes(user, ['password']);
 
-    const { password: _, ...userWithoutPassword } = user;
+    const token = this.jwtService.generateToken(userWithoutPassword);
+
     return {
       user: userWithoutPassword,
       token,
