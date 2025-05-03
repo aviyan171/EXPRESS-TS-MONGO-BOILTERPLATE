@@ -1,6 +1,7 @@
 import { User } from '@/interfaces/user.interface';
 import { JwtService } from '@/utils/services/jwt.service';
 import type { NextFunction, Request, Response } from 'express';
+import { JsonWebTokenError } from 'jsonwebtoken';
 import { ApiError } from '../utils/apiError';
 
 export const authenticate = (req: Request, _res: Response, next: NextFunction): void => {
@@ -19,7 +20,10 @@ export const authenticate = (req: Request, _res: Response, next: NextFunction): 
       const decoded = new JwtService().verifyToken(token) as User;
       req.user = decoded;
       next();
-    } catch (_error) {
+    } catch (error) {
+      if (error instanceof JsonWebTokenError) {
+        throw error;
+      }
       throw ApiError.unauthorized('Invalid or expired token');
     }
   } catch (error) {

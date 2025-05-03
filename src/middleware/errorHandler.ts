@@ -56,10 +56,10 @@ export const errorHandler = (
   // JWT errors
   else if (err.name === 'JsonWebTokenError') {
     statusCode = HTTP_STATUS.UNAUTHORIZED;
-    message = ERROR_MESSAGES.INVALID_TOKEN;
+    message = err.message;
   } else if (err.name === 'TokenExpiredError') {
     statusCode = HTTP_STATUS.UNAUTHORIZED;
-    message = ERROR_MESSAGES.INVALID_TOKEN;
+    message = err.message;
   }
   // Zod validation errors
   else if (err instanceof ZodError) {
