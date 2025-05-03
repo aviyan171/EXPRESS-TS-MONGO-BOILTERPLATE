@@ -48,12 +48,12 @@ export class AuthService {
   async login(email: string, password: string): Promise<AuthResponse> {
     const user = await this.authRepository.findUserByEmail(email);
     if (!user) {
-      throw new ApiError(401, 'Invalid email or password');
+      throw ApiError.unauthorized('Invalid email or password');
     }
 
     const isPasswordValid = await this.passwordService.comparePasswords(password, user.password);
     if (!isPasswordValid) {
-      throw new ApiError(401, 'Invalid email or password');
+      throw ApiError.unauthorized('Invalid email or password');
     }
 
     const userWithoutPassword = omitAttributes(user, ['password']);

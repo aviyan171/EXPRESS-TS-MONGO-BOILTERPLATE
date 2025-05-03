@@ -90,4 +90,5 @@ export const ERROR_MESSAGES = {
   SERVER_ERROR: 'Internal server error',
   DUPLICATE_EMAIL: 'Email already exists',
   INVALID_TOKEN: 'Invalid or expired token',
+  ADMIN_ONLY: 'This action is only available to admins',
 } as const;

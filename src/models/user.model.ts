@@ -1,3 +1,4 @@
+import { UserRole } from '@/enum/user.enum';
 import { Schema, model } from 'mongoose';
 import type { User } from '../interfaces/user.interface';
 
@@ -29,6 +30,12 @@ const userSchema = new Schema<User>(
       required: true,
       unique: true,
     },
+    role: {
+      type: String,
+      required: false,
+      enum: UserRole,
+      default: UserRole.USER,
+    },
   },
   {
     timestamps: true,
@@ -42,6 +49,7 @@ const userSchema = new Schema<User>(
           createdAt: ret.createdAt,
           updatedAt: ret.updatedAt,
           userId: ret.userId,
+          role: ret.role,
           password: ret.password,
         };
       },

@@ -1,3 +1,5 @@
+import { HTTP_STATUS } from '@/config/constants';
+import { sendSuccess } from '@/utils/responseHandler';
 import type { NextFunction, Request, Response } from 'express';
 import { UserService } from '../services/user.service';
 import { ApiError } from '../utils/apiError';
@@ -12,7 +14,7 @@ export class UserController {
   public getUsers = async (_req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const users = await this.userService.getAllUsers();
-      res.json(users);
+      sendSuccess(res, users, 'Users fetched successfully', HTTP_STATUS.OK);
     } catch (error) {
       next(error);
     }
@@ -23,11 +25,7 @@ export class UserController {
       const { id } = req.params;
       const user = await this.userService.getUserById(id);
 
-      if (!user) {
-        throw new ApiError(404, 'User not found');
-      }
-
-      res.json(user);
+      sendSuccess(res, user, 'User fetched successfully', HTTP_STATUS.OK);
     } catch (error) {
       next(error);
     }

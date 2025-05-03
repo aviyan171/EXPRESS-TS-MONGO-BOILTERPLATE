@@ -1,8 +1,14 @@
+import { PipelineStage } from 'mongoose';
 import type { BaseRepository } from '../interfaces/repository.interface';
 import type { User } from '../interfaces/user.interface';
 import { UserModel } from '../models/user.model';
 
 export class UserRepository implements BaseRepository<User> {
+  async aggregate(pipeline: PipelineStage[]): Promise<any[]> {
+    const aggregateResult = await UserModel.aggregate(pipeline);
+    return aggregateResult;
+  }
+
   async create(data: Partial<User>): Promise<User> {
     const user = await UserModel.create(data);
     return user.toJSON();

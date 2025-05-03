@@ -1,3 +1,4 @@
+import { ApiError } from '@/utils/apiError';
 import type { User } from '../interfaces/user.interface';
 import { UserRepository } from '../repositories/user.repository';
 
@@ -13,7 +14,11 @@ export class UserService {
   }
 
   async getUserById(id: string): Promise<User | null> {
-    return this.userRepository.findById(id);
+    const user = await this.userRepository.findById(id);
+    if (!user) {
+      throw ApiError.notFound('User not found');
+    }
+    return user;
   }
 
   async getUserByEmail(email: string): Promise<User | null> {
