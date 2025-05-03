@@ -76,11 +76,11 @@ A modern, production-ready boilerplate for Node.js applications using Express, T
 ```
 .
 ├── src/
-│   ├── index.ts              # Application entry point
-│   ├── routes/              # Route definitions
-│   ├── middleware/          # Custom middleware
-│   ├── models/             # Mongoose models
-│   ├── controllers/        # Route controllers
+│   ├── index.ts           # Application entry point
+│   ├── routes/            # Route definitions
+│   ├── middleware/        # Custom middleware
+│   ├── models/            # Mongoose models
+│   ├── controllers/       # Route controllers
 │   ├── services/          # Business logic
 │   └── utils/             # Utility functions
 │   └── types/             # TypeScript type definitions
