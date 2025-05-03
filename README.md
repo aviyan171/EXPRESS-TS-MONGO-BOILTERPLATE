@@ -83,6 +83,13 @@ A modern, production-ready boilerplate for Node.js applications using Express, T
 │   ├── controllers/        # Route controllers
 │   ├── services/          # Business logic
 │   └── utils/             # Utility functions
+│   └── types/             # TypeScript type definitions
+│   └── interfaces/        # Interface definitions
+│   └── repositories/      # Repository definitions
+│   └── config/            # Configuration
+│   └── enums/             # Enums
+│   └── constants/         # Constants
+│   └── validations/       # Validation schemas
 ├── dist/                  # Compiled JavaScript
 ├── logs/                  # Application logs
 ├── .env                   # Environment variables
