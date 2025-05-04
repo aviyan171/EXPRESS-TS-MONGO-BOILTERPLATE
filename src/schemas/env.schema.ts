@@ -20,8 +20,10 @@ export const databaseEnvSchema = z.object({
  * JWT environment schema
  */
 export const jwtEnvSchema = z.object({
-  JWT_SECRET: z.string().min(32, 'JWT secret must be at least 32 characters'),
-  JWT_EXPIRES_IN: z.string().transform((value) => value as StringValue),
+  ACCESS_TOKEN_SECRET: z.string().min(32, 'access token secret must be at least 32 characters'),
+  REFRESH_TOKEN_SECRET: z.string().min(32, 'refresh token secret must be at least 32 characters'),
+  ACCESS_TOKEN_EXPIRES_IN: z.string().transform((value) => value as StringValue),
+  REFRESH_TOKEN_EXPIRES_IN: z.string().transform((value) => value as StringValue),
 });
 
 /**

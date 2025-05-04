@@ -1,6 +1,8 @@
 import { env } from './env';
 
 export const jwtConfig = {
-  jwtSecret: env.JWT_SECRET || 'your-secret-key',
-  jwtExpiresIn: env.JWT_EXPIRES_IN, // 1 day in seconds
+  accessTokenSecret: env.ACCESS_TOKEN_SECRET,
+  refreshTokenSecret: env.REFRESH_TOKEN_SECRET,
+  accessTokenExpiresIn: env.ACCESS_TOKEN_EXPIRES_IN,
+  refreshTokenExpiresIn: env.REFRESH_TOKEN_EXPIRES_IN,
 };
