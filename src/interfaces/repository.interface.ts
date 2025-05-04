@@ -10,5 +10,5 @@ export interface BaseRepository<T> {
   find(filter: Partial<T>): Promise<T[]>;
   update(id: string, data: Partial<T>): Promise<T | null>;
   delete(id: string): Promise<boolean>;
-  aggregate(pipeline: PipelineStage[]): Promise<T[]>;
+  aggregate?(pipeline: PipelineStage[]): Promise<T[]>;
 }

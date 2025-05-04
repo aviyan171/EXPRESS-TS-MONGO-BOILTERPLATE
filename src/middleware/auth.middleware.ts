@@ -17,7 +17,7 @@ export const authenticate = (req: Request, _res: Response, next: NextFunction): 
     }
 
     try {
-      const decoded = new JwtService().verifyToken(token) as User;
+      const decoded = new JwtService().verifyAccessToken(token) as User;
       req.user = decoded;
       next();
     } catch (error) {

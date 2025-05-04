@@ -15,7 +15,7 @@ export class UserRepository implements BaseRepository<User> {
   }
 
   async findById(id: string): Promise<User | null> {
-    const user = await UserModel.findById(id);
+    const user = await UserModel.findOne({ userId: id });
     return user ? user.toJSON() : null;
   }
 

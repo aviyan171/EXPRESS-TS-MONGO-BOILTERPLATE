@@ -28,4 +28,25 @@ export class AuthController {
       next(error);
     }
   };
+
+  public refreshToken = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      const { refreshToken } = req.body;
+
+      const result = await this.authService.refreshToken(refreshToken);
+      sendSuccess(res, result, 'New access token generated successfully');
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  public logout = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      const { refreshToken } = req.body;
+      const result = await this.authService.logout(refreshToken);
+      sendSuccess(res, result, 'Logout successful');
+    } catch (error) {
+      next(error);
+    }
+  };
 }

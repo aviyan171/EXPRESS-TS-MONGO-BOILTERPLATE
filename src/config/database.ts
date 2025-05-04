@@ -1,7 +1,7 @@
 import { ApiError } from '@/utils/apiError';
 import { logger } from '@/utils/logger';
 import mongoose from 'mongoose';
-import { ERROR_MESSAGES, HTTP_STATUS } from './constants';
+import { ERROR_MESSAGES } from './constants';
 import { env } from './env';
 
 /**
@@ -34,7 +34,7 @@ export const connectDB = async (): Promise<void> => {
     });
   } catch (error) {
     logger.error('Error connecting to MongoDB:', error);
-    throw new ApiError(HTTP_STATUS.INTERNAL_SERVER_ERROR, ERROR_MESSAGES.SERVER_ERROR);
+    throw ApiError.internalServerError(ERROR_MESSAGES.SERVER_ERROR);
   }
 };
 
