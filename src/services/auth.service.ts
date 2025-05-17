@@ -6,6 +6,7 @@ import type { RegisterInput } from '@/schemas/auth.schema';
 import { compareBcrypt } from '@/utils/bcrypt';
 import { omitAttributes } from '@/utils/common';
 import { toMs } from '@/utils/ms';
+import { mailService } from '@/utils/services/mail.service';
 import type { User } from '../interfaces/user.interface';
 import { AuthRepository } from '../repositories/auth.repository';
 import { ApiError } from '../utils/apiError';
@@ -47,6 +48,13 @@ export class AuthService {
     });
 
     const userWithoutPassword = omitAttributes(user, ['password']);
+
+    await mailService.sendMail({
+      to: userWithoutPassword.email,
+      subject: 'Registration successful',
+      templateType: 'registrationSuccess',
+      data: userWithoutPassword,
+    });
 
     return {
       user: userWithoutPassword,
