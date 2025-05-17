@@ -13,6 +13,7 @@ export class AuthController {
   public register = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const result = await this.authService.register(req.body);
+
       sendSuccess(res, result, 'User registered successfully', HTTP_STATUS.CREATED);
     } catch (error) {
       next(error);

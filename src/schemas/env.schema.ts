@@ -34,6 +34,14 @@ export const loggingEnvSchema = z.object({
 });
 
 /**
+ * Mail environment schema
+ */
+export const mailEnvSchema = z.object({
+  MAIL_USER: z.string().email('Invalid mail user'),
+  MAIL_PASSWORD: z.string().min(16, 'Mail password must be at least 16 characters'),
+});
+
+/**
  * Combined environment schema
  */
 export const envSchema = z.object({
@@ -41,6 +49,7 @@ export const envSchema = z.object({
   ...databaseEnvSchema.shape,
   ...jwtEnvSchema.shape,
   ...loggingEnvSchema.shape,
+  ...mailEnvSchema.shape,
 });
 
 /**
@@ -53,3 +62,4 @@ export type ServerEnv = z.infer<typeof serverEnvSchema>;
 export type DatabaseEnv = z.infer<typeof databaseEnvSchema>;
 export type JWTEnv = z.infer<typeof jwtEnvSchema>;
 export type LoggingEnv = z.infer<typeof loggingEnvSchema>;
+export type MailEnv = z.infer<typeof mailEnvSchema>;
