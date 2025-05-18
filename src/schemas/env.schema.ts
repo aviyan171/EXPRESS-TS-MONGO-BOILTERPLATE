@@ -42,6 +42,15 @@ export const mailEnvSchema = z.object({
 });
 
 /**
+ * Redis environment schema
+ */
+export const redisEnvSchema = z.object({
+  REDIS_HOST: z.string().default('localhost'),
+  REDIS_PORT: z.string().transform(Number).pipe(z.number().positive()),
+  REDIS_PASSWORD: z.string().optional(),
+});
+
+/**
  * Combined environment schema
  */
 export const envSchema = z.object({
@@ -50,6 +59,7 @@ export const envSchema = z.object({
   ...jwtEnvSchema.shape,
   ...loggingEnvSchema.shape,
   ...mailEnvSchema.shape,
+  ...redisEnvSchema.shape,
 });
 
 /**
