@@ -6,7 +6,7 @@ import { ApiError } from '../utils/apiError';
 
 export const authenticate = (req: Request, _res: Response, next: NextFunction): void => {
   try {
-    const authHeader = req.headers.authorization;
+    const authHeader = req.headers.cookie;
     if (!authHeader) {
       throw ApiError.unauthorized('No token provided');
     }

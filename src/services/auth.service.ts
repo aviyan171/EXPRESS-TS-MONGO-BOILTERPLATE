@@ -126,6 +126,8 @@ export class AuthService {
     const userId = decodedRefreshToken.userId;
 
     const { acknowledged } = await this.refreshTokenRepository.revokeRefreshToken(userId);
+
+
     if (!acknowledged) throw ApiError.unauthorized('Refresh token is not revoked');
 
     return acknowledged;

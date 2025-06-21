@@ -4,6 +4,7 @@ import cors from 'cors';
 import express, { type Express } from 'express';
 import helmet from 'helmet';
 import morgan from 'morgan';
+import cookieParser from 'cookie-parser';
 import { routes } from '../routes';
 import { logger } from '../utils/logger';
 
@@ -39,6 +40,9 @@ export const createApp = (options: AppOptions = defaultOptions): Express => {
   // Body parsing middleware
   app.use(express.json({ limit: APP_CONSTANTS.UPLOAD.MAX_FILE_SIZE }));
   app.use(express.urlencoded({ extended: true, limit: APP_CONSTANTS.UPLOAD.MAX_FILE_SIZE }));
+
+  // Cookie parsing middleware
+  app.use(cookieParser());
 
   // Security middleware
   if (options.enableHelmet) {

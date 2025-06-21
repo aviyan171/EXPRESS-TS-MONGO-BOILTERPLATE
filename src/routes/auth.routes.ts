@@ -9,7 +9,7 @@ const authController = new AuthController();
 // Auth routes
 router.post('/register', validate(registerSchema), authController.register);
 router.post('/login', validate(loginSchema), authController.login);
-router.post('/token', validate(tokenSchema), authController.refreshToken);
-router.post('/logout', validate(tokenSchema), authController.logout);
+router.post('/token', authController.refreshToken);
+router.post('/logout', authController.logout);
 
 export default router;
